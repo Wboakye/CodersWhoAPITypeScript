@@ -9,6 +9,20 @@ const verify = require('./protectedRoutes');
 const User = require('../models/User');
 const  { registerValidation, loginValidation } = require('../validation');
 
+interface UserInfo {
+    _id: string
+    following?: string[]
+    followers?: string[]
+    groups?: string[]
+    firstName: string
+    lastName: string
+    username: string 
+    email: string
+    password: string
+    date: any
+    __v: number
+}
+
 
 //CREATE NEW USER, EXPECTS: FIRSTNAME/LASTNAME/USERNAME/EMAIL/PASSWORD => JWT
 router.post('/register', async (req: Request, res: Response) => {
@@ -63,7 +77,7 @@ router.post('/register', async (req: Request, res: Response) => {
     }
 });
 
-//LOGIN, EXPECTS: USERNAME/PASSWORD => JWT
+//LOGIN, EXPECTS: USERNAME/PASSWORD => JWT: STRING
 router.post('/login', async (req: Request, res: Response) => {
 
     //VALIDATE DATA 
@@ -131,6 +145,34 @@ router.post('/usernameexists', async (req: Request, res: Response) => {
 router.post('/authenticate', verify, async (req: Request, res: Response) => {
     res.status(200).send({success: true})
 });
+
+
+//SENDS USER PROFILE INFORMATION, EXPECTS TARGET USERID => USERINFO: OBJECT
+router.post('/profile', async (req: any, res: Response) => {
+    try{
+        const user: UserInfo = await User.findOne({ _id: req.body.userID });
+        res.status(200).send(
+            {   
+                success: true,
+                body: 
+                {
+                    _id: user._id,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    username: user.username, 
+                    following: user.following,
+                    followers: user.followers,
+                    groups: user.groups,
+                    email: user.email
+                }
+            });
+    }catch(err){
+        res.status(401).send({success: false, body: err})
+    }
+    
+});
+
+
 
 
 module.exports = router;

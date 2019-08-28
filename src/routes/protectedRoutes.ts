@@ -14,10 +14,8 @@ module.exports = async function(req: any, res: Response, next: NextFunction){
         try{
             //COMPARE TOKEN TO SECRET
             const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-            console.log("PR VERIFIED" + verified);
             req.user = verified
             const id = req.user._id
-            console.log("PR ID:" + id)
             const user = await User.findOne({ _id: id });
 
             //COMPARE TOKEN TO USERS LAST KNOWN TOKEN
@@ -26,10 +24,9 @@ module.exports = async function(req: any, res: Response, next: NextFunction){
             }else{
                 console.log('Token does not match database')
                 res.status(401).send({success: false, message: 'Invalid Token'});
-            }
-            
+            }            
         }catch(err){
-            console.log("AUTH ERROR :" + err)
+            console.log("AUTH ERROR :" + err);
             res.status(401).send({success: false, message: 'Invalid Token'});
         }
     }

@@ -40,7 +40,7 @@ router.delete('/:postId', verify, async (req: Request, res: Response) => {
     }
 })
 
-//UPDATE POST
+//UPDATE POST REQUIRES ATTENTION: UPDATE BODY AND VERIFY ONLY UPDATING OWN POSTS    
 router.patch('/:postId', verify, async (req: Request, res: Response) => {
     try{
         const updatedPost: Object = await Post.updateOne(
