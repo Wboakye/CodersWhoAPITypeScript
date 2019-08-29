@@ -150,7 +150,9 @@ router.post('/authenticate', verify, async (req: Request, res: Response) => {
 //SENDS USER PROFILE INFORMATION, EXPECTS TARGET USERID => USERINFO: OBJECT
 router.post('/profile', async (req: any, res: Response) => {
     try{
-        const user: UserInfo = await User.findOne({ _id: req.body.userID });
+        console.log(`REQUEST ID ${req.body.userId}`)
+        const user: UserInfo = await User.findOne({ _id: req.body.userId });
+        console.log(user)
         res.status(200).send(
             {   
                 success: true,
@@ -166,8 +168,10 @@ router.post('/profile', async (req: any, res: Response) => {
                     email: user.email
                 }
             });
+            console.log('success')
     }catch(err){
         res.status(401).send({success: false, body: err})
+        console.log(err)
     }
     
 });

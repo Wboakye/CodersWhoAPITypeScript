@@ -20,7 +20,7 @@ const cors = require('cors');
 require('dotenv/config');
 
 //IMPORT ROUTES
-const authRoute: Router = require('./routes/auth');
+const userRoute: Router = require('./routes/user');
 const postsRoute: Router = require('./routes/posts');
 const newsRoute: Router = require('./routes/news');
 
@@ -30,7 +30,7 @@ app.use(json());
 app.use(bodyParser.json());
 
 //ROUTES
-app.use('/api/user', authRoute);
+app.use('/api/user', userRoute);
 app.use('/api/posts', postsRoute);
 app.use('/api/news', newsRoute);
 
