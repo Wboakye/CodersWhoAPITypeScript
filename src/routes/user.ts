@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 const verify = require('./protectedRoutes');
 
 const User = require('../models/User');
+const Post = require('../models/Post')
 const  { registerValidation, loginValidation } = require('../validation');
 
 interface UserInfo {
@@ -101,8 +102,9 @@ router.post('/login', async (req: Request, res: Response) => {
                 //CREATE, ASSIGN, AND SEND TOKEN
                 const token = jwt.sign({
                     _id: user._id,
-                    fistName: user.firstName,
-                    lastName: user.lastName
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    username: user.username
                 }, process.env.TOKEN_SECRET);
 
                 User.findByIdAndUpdate(
@@ -152,6 +154,7 @@ router.post('/profile', async (req: any, res: Response) => {
     try{
         console.log(`REQUEST ID ${req.body.userId}`)
         const user: UserInfo = await User.findOne({ _id: req.body.userId });
+        const posts = await Post.find({ userId: req.body.userId })
         console.log(user)
         res.status(200).send(
             {   
@@ -165,7 +168,8 @@ router.post('/profile', async (req: any, res: Response) => {
                     following: user.following,
                     followers: user.followers,
                     groups: user.groups,
-                    email: user.email
+                    email: user.email,
+                    posts: posts
                 }
             });
             console.log('success')

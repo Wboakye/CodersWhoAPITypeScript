@@ -55,10 +55,16 @@ router.patch('/:postId', verify, async (req: Request, res: Response) => {
 
 //SUBMIT NEW POST
 router.post('/create', verify, async (req: any, res: Response) => {
+    console.log('USER')
+    console.log(req.user)
     const post = new Post({
         title: req.body.title,
+        subTitle: req.body.subTitle,
         description: req.body.description,
-        userId: req.user._id
+        userId: req.user._id,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        username: req.user.username
     });
     try{
         const savedPost: Object = await post.save();
