@@ -31,6 +31,10 @@ const PostSchema: Object = mongoose.Schema({
         type: String,
         required: true
     },
+    group: {
+        type: String,
+        required: true
+    },
     likes: {
         type: Array,
         default: []

@@ -61,6 +61,7 @@ router.post('/create', verify, async (req: any, res: Response) => {
         title: req.body.title,
         subTitle: req.body.subTitle,
         description: req.body.description,
+        group: req.body.group,
         userId: req.user._id,
         firstName: req.user.firstName,
         lastName: req.user.lastName,
