@@ -15,7 +15,7 @@
     "mongoose": "^5.6.11",
     "node-cron": "^2.0.3",
     "socket.io": "^2.2.0",
-    "ws": "^7.1.2"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "@types/express": "^4.17.1",
